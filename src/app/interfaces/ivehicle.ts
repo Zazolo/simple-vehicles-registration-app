@@ -5,5 +5,6 @@ export interface IvehicleBasic {
     renavam:string,
     modelo:string,
     marca:string,
-    ano:number
+    ano:number,
+    fipe:string
 }

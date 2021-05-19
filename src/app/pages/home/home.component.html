@@ -16,61 +16,71 @@
         <mat-card-title>Veículos cadastrados</mat-card-title>
         <mat-card-subtitle>Altere a lista de veículos cadastrados no sistema.</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content *ngIf="ELEMENT_DATA.length > 0 && !isLoading">
             <table mat-table [dataSource]="dataSource" class="desktop">
           
               <!-- Position Column -->
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef> Identificador </th>
-                <td mat-cell *matCellDef="let element" [matTooltip]="element.position" matTooltipShowDelay="3000" matTooltipHideDelay="800"> 
-                    <span>{{element.position}}</span>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.id" matTooltipShowDelay="1500" matTooltipHideDelay="800"> 
+                    <span>{{element.id}}</span>
                 </td>
               </ng-container>
           
               <!-- Name Column -->
               <ng-container matColumnDef="placa">
                 <th mat-header-cell *matHeaderCellDef> Placa </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.placa" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.placa}} </td>
               </ng-container>
           
               <!-- Weight Column -->
               <ng-container matColumnDef="chassi">
                 <th mat-header-cell *matHeaderCellDef> Chassi </th>
-                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.chassi" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.chassi}} </td>
               </ng-container>
           
               <!-- Symbol Column -->
               <ng-container matColumnDef="renavam">
                 <th mat-header-cell *matHeaderCellDef> Renavam </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.renavam" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.renavam}} </td>
               </ng-container>
 
               <ng-container matColumnDef="modelo">
                 <th mat-header-cell *matHeaderCellDef> Modelo </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.modelo" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.modelo}} </td>
               </ng-container>
 
               <ng-container matColumnDef="marca">
                 <th mat-header-cell *matHeaderCellDef> Marca </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.marca" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.marca}} </td>
               </ng-container>
 
               <ng-container matColumnDef="ano">
                 <th mat-header-cell *matHeaderCellDef> Ano </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.ano" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.ano}} </td>
               </ng-container>
 
               <ng-container matColumnDef="fipe">
                 <th mat-header-cell *matHeaderCellDef> FIPE </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.fipe" matTooltipShowDelay="1500" matTooltipHideDelay="800"> {{element.fipe}} </td>
               </ng-container>
 
               <ng-container matColumnDef="option">
                 <th mat-header-cell *matHeaderCellDef class="icon-only"></th>
                 <td mat-cell *matCellDef="let element" class="icon-only"> 
-                    <button mat-icon-button>
-                        <mat-icon aria-hidden="false" aria-label="Example user verified icon">drag_handle</mat-icon>
-                    </button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="edit(element)">
+                          <mat-icon>edit</mat-icon>
+                          <span>Editar</span>
+                        </button>
+                        <button mat-menu-item (click)="remove(element)">
+                          <mat-icon>remove</mat-icon>
+                          <span>Remover</span>
+                        </button>
+                      </mat-menu>
                 </td>
               </ng-container>
           
@@ -82,14 +92,14 @@
 
                 <ng-container matColumnDef="renavam">
                     <th mat-header-cell *matHeaderCellDef> Número do Renavam </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.renavam}} </td>
                 </ng-container>
 
                 <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="mobileDisplayedColumns.length">
                     <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                        <p>EXPANDEDE CARAI -> {{element.position}}</p>
+                        <p>EXPANDEDE CARAI -> {{element.id}}</p>
                     </div>
                     </td>
                 </ng-container>
@@ -104,11 +114,26 @@
             </table>
           
     </mat-card-content>
-    <mat-card-footer>
+
+    <mat-card-content *ngIf="ELEMENT_DATA.length < 1 && !isLoading">
+        <div class="empty-vehicles">
+            <mat-icon>mood_bad</mat-icon>
+            <div class="text">
+                <h3>Não há veículos cadastrados!</h3>
+                <p>Utilize o botão <mat-icon color="primary">add</mat-icon> para cadastrar um novo veículo</p>
+            </div>
+            
+        </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </mat-card-content>
+    <mat-card-footer color="primary">
         <div></div>
-        <mat-paginator hidePageSize [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator hidePageSize [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons  [ngStyle]="{'display': ELEMENT_DATA.length > 5 ? 'flex' : 'none' }"></mat-paginator>
         <div></div>
-        <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+        <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="create()">
             <mat-icon>add</mat-icon>
         </button>
     </mat-card-footer>

@@ -1,1 +1,80 @@
-<p>add-or-edit-vehicle works!</p>
+<div class="container">
+    <div class="heading">
+        <mat-card-header>
+            <mat-card-title>{{isCreating ? 'Registrar veículo' : 'Editar veículo'}}</mat-card-title>
+            <mat-card-subtitle>{{isCreating ? 'Preencha os campos abaixo para prosseguir.' : 'Altere os campos abaixo e clique em Alterar.'}}</mat-card-subtitle>
+        </mat-card-header>
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="content">
+
+        <form [formGroup]="modalForm" class="example-form">
+            <mat-form-field>
+              <mat-label>Marca do Veículo</mat-label>
+              <input type="text"
+                     placeholder="Ex: Volkswagen"
+                     matInput
+                     formControlName="marca"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptionsMarca | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Qual é o modelo?</mat-label>
+                <input type="text"
+                       placeholder="Ex: Fusca"
+                       matInput
+                       formControlName="modelo"
+                       [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptionsModelo | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+            <div class="horizontal">
+                <mat-form-field>
+                    <mat-label>Renavam</mat-label>
+                    <input type="text" placeholder="000000000" matInput formControlName="renavam">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Placa</mat-label>
+                    <input type="text" placeholder="000000000" matInput formControlName="placa">
+                </mat-form-field>
+
+            </div>
+
+            
+
+            <div class="horizontal">
+
+                <mat-form-field>
+                    <mat-label>Chassi</mat-label>
+                    <input type="text" placeholder="ABC0000000" matInput formControlName="chassi">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Ano</mat-label>
+                    <input type="number" placeholder="1999" matInput formControlName="ano">
+                </mat-form-field>
+
+            </div>
+            
+          </form>
+
+    </div>
+
+    <div class="footer">
+        <button mat-flat-button (click)="cancel()">Cancelar</button>
+        <button mat-flat-button color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button>
+    </div>
+</div>
