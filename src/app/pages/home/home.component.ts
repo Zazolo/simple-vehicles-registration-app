@@ -33,10 +33,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   expandedElement!: IvehicleBasic | null;
   isLoading = false;
   ELEMENT_DATA: IvehicleBasic[] = [
-    { ano: 1999, chassi:'BD456867', id:'1234567ujndf-dfwqfqnmfio-14561', marca:'Volkswagen', modelo: 'FOX', placa: 'KYW5466', renavam: '12365487923', fipe: ''}
+    { ano: 1999, chassi:'BD456867', id:'1234567ujndf-dfwqfqnmfio-14561', marca:'Volkswagen', modelo: 'FOX', placa: 'KYW5466', renavam: '12365487923'}
   ];
 
-  displayedColumns: string[] = ['id', 'placa', 'chassi', 'renavam', 'modelo', 'marca', 'ano', 'fipe', 'option'];
+  displayedColumns: string[] = ['id', 'placa', 'chassi', 'renavam', 'modelo', 'marca', 'ano', 'option'];
   mobileDisplayedColumns: string[] = ['renavam'];
   
   dataSource = new MatTableDataSource<IvehicleBasic>(this.ELEMENT_DATA);

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [ngStyle]="{'display': step == 0 ? 'flex' : 'none' }">
     <div class="heading">
         <mat-card-header>
             <mat-card-title>{{isCreating ? 'Registrar veículo' : 'Editar veículo'}}</mat-card-title>
@@ -75,6 +75,44 @@
 
     <div class="footer">
         <button mat-flat-button (click)="cancel()">Cancelar</button>
+        <!-- <button mat-flat-button [disabled]="!this.modalForm.valid" color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button> -->
         <button mat-flat-button color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button>
     </div>
+</div>
+
+<div class="container" [ngStyle]="{'display': step == 1 ? 'flex' : 'none' }">
+    <div class="heading"></div>
+    <div class="content">
+        <div class="cases success">
+            <mat-icon class="big-icon">
+                check_circle
+            </mat-icon>
+            <h1>Sucesso!</h1>
+            <p>{{isCreating ? 'Seu registro foi realizado' : 'A edição do veículo foi efetuada'}}  com sucesso!</p>
+        </div>
+    </div>
+    <div class="footer">
+        <button mat-flat-button (click)="cancel()">Pronto</button>
+    </div>
+    
+    
+</div>
+
+<div class="container" [ngStyle]="{'display': step == 2 ? 'flex' : 'none' }">
+    <div class="heading"></div>
+    <div class="content">
+        <div class="cases failed">
+            <mat-icon class="big-icon">
+                sentiment_dissatisfied
+            </mat-icon>
+            <h1>Algo deu errado!</h1>
+            <p>{{isCreating ? 'Houve um erro ao registrar o veículo' : 'Não foi possível editar o veículo'}} com sucesso!</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <button mat-flat-button (click)="cancel()">Desistir</button>
+        <button mat-flat-button color="primary" (click)="backTopFirstStep()">Voltar</button>
+    </div>
+    
 </div>

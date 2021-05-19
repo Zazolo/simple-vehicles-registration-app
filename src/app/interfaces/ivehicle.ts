@@ -6,5 +6,5 @@ export interface IvehicleBasic {
     modelo:string,
     marca:string,
     ano:number,
-    fipe:string
+    //fipe:string
 }

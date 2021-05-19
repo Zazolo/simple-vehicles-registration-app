@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IvehicleBasic } from 'src/app/interfaces/ivehicle';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 @Component({
@@ -11,13 +11,14 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class AddOrEditVehicleComponent implements OnInit {
 
+  step = 0;
   modalForm = new FormGroup({
-    marca: new FormControl(),
-    modelo: new FormControl(),
-    renavam: new FormControl(),
-    placa: new FormControl(),
-    chassi: new FormControl(),
-    ano: new FormControl(),
+    marca: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    modelo: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    renavam: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(11)]),
+    placa: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(7)]),
+    chassi: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(17)]),
+    ano: new FormControl('', [Validators.required, Validators.minLength(4)]),
   });
   optionMarca: string[] = ['One', 'Two', 'Three'];
   optionModelo: string[] = ['Fusca', 'Gol', 'Tinder'];
@@ -66,11 +67,17 @@ export class AddOrEditVehicleComponent implements OnInit {
 
 
   regOrEdit(){
-    console.log(this.modalForm.value)
+    this.step = 1;
+    //console.log(this.modalForm.value)
   }
 
   cancel(){
     this.diagRef.close(null);
   }
+
+  backTopFirstStep(){
+    this.step = 0;
+  }
+
 
 }

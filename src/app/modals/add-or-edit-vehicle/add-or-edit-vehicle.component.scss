@@ -20,6 +20,36 @@ div.container{
         width: 100%;
         padding: 16px 0px;
         box-sizing: border-box;
+
+        .big-icon{
+            font-size: 15em;
+            width: auto;
+            height: auto;
+        }
+
+        .cases{
+            align-content: center;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+            display: flex;
+            h1{
+                font-weight: bolder;
+            }
+            &.success{
+                mat-icon{
+                    color: rgb(15, 184, 71);
+                }
+            }
+
+            &.failed{
+                mat-icon{
+                    color: rgb(245, 68, 68);
+                }
+            }
+            
+        }
+
         form{
             display: flex;
             flex-direction: column;
@@ -64,6 +94,7 @@ div.container{
     .footer{
         display: flex;
         justify-content: flex-end;
+        max-width: 100%;
         button{
             margin-left: 20px;
             width: 85px;
