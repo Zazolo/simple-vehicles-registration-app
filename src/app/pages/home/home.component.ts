@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '../../../environments/environment';
-
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export interface PeriodicElement {
   name: string;
@@ -15,12 +15,19 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
   application_title:string = environment.application_title;
-
+  expandedElement!: PeriodicElement | null;
 
   ELEMENT_DATA: PeriodicElement[] = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -45,7 +52,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
   ];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['id', 'placa', 'chassi', 'renavam', 'modelo', 'marca', 'ano', 'fipe', 'option'];
+  mobileDisplayedColumns: string[] = ['renavam'];
+  
   dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

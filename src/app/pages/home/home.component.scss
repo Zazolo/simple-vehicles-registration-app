@@ -13,25 +13,108 @@ mat-card{
     transform: translateX(-50%);
     max-width: 900px;
     min-width: 900px;
+    min-height: 480px;
     padding: 0;
 
+    @media screen and (max-width: 900px){
+        max-width:100%;
+        min-width:100%;
+        height: calc(100% - 64px);
+        overflow-y: auto;
+        top: 0;
+        width: 100%;
+        box-sizing: border-box;
+        transform: none!important;
+        left: 0!important;
+        position: relative;
+    }
+
     mat-card-header{
-        padding: 25px;
+        padding: 20px 0px 0px 5px;
     }
 
     mat-card-content{
         width: 100%;
     
+        
+       
+
         table{
             width: 100%;
+
+            th,td{
+                width: 12.5%!important;
+            }
+
+            @media screen and (max-width: 900px){
+                &.desktop{
+                    display: none!important;
+                }
+
+                &.mobile{
+                    display: table!important;
+                    height: 100%!important;
+                }
+            }
+
+            &.desktop{
+                display: table;
+
+                .icon-only{
+                    width: 35px!important;
+                }
+            }
+
+            &.mobile{
+                display: none;
+                tr.example-detail-row {
+                    height: 0;
+                }
+
+                tr.example-element-row:not(.example-expanded-row):hover {
+                    background: whitesmoke;
+                }
+
+                tr.example-element-row:not(.example-expanded-row):active {
+                    background: #efefef;
+                }
+
+                .example-element-row td {
+                    border-bottom-width: 0;
+                }
+
+                .example-element-detail {
+                    overflow: hidden;
+                    display: flex;
+                }
+            }
         }
+
+        
     }
 
     mat-card-footer{
         display: flex;
         justify-content: space-between;
-        padding-bottom: 25px;
         position: relative;
+
+        @media screen and (max-width: 900px){
+            position: static!important;
+            margin: 0!important;
+            button{
+                position: absolute!important;
+                right: 7%!important;
+                top: auto;
+                bottom: 7%!important;
+            }
+        }
+        mat-paginator{
+            ::ng-deep .mat-paginator-range-label{
+                margin: 0!important;
+                display: none;
+                background-color: aquamarine!important;
+            }
+        }
         button{
             position: absolute;
             transform: translateY(50%);
@@ -39,8 +122,5 @@ mat-card{
         }
     }
 
-    @media screen and (max-width: 600px){
-
-    }
+    
 }
-
