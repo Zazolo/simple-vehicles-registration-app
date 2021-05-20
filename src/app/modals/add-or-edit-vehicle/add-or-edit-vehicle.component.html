@@ -83,6 +83,20 @@
 <div class="container" [ngStyle]="{'display': step == 1 ? 'flex' : 'none' }">
     <div class="heading"></div>
     <div class="content">
+        <div class="cases processing">
+            <mat-spinner></mat-spinner>
+            <h1>Aguarde...</h1>
+        </div>
+    </div>
+    
+    <div class="footer">
+    </div>
+    
+</div>
+
+<div class="container" [ngStyle]="{'display': step == 2 ? 'flex' : 'none' }">
+    <div class="heading"></div>
+    <div class="content">
         <div class="cases success">
             <mat-icon class="big-icon">
                 check_circle
@@ -98,7 +112,7 @@
     
 </div>
 
-<div class="container" [ngStyle]="{'display': step == 2 ? 'flex' : 'none' }">
+<div class="container" [ngStyle]="{'display': step == 3 ? 'flex' : 'none' }">
     <div class="heading"></div>
     <div class="content">
         <div class="cases failed">
@@ -116,3 +130,4 @@
     </div>
     
 </div>
+

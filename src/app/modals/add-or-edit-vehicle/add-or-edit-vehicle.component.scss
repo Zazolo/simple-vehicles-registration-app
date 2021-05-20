@@ -47,6 +47,15 @@ div.container{
                     color: rgb(245, 68, 68);
                 }
             }
+
+            &.processing{
+                justify-content: center!important;
+                height: 100%!important;
+                h1{
+                    margin-top: 30px;
+                    font-weight: 400!important;
+                }
+            }
             
         }
 
