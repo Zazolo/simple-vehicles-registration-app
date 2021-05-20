@@ -7,6 +7,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { IvehicleBasic } from 'src/app/interfaces/ivehicle';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOrEditVehicleComponent } from 'src/app/modals/add-or-edit-vehicle/add-or-edit-vehicle.component';
+import { VehicleService } from 'src/app/services/vehicle.service';
+import { RmVehicleComponent } from 'src/app/modals/rm-vehicle/rm-vehicle.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AboutComponent } from '../about/about.component';
 
 export interface PeriodicElement {
   name: string;
@@ -51,12 +55,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
     };
   }
   constructor(
-    private dialogService:MatDialog
+    private dialogService:MatDialog,
+    private vehicleService:VehicleService,
+    private snackBar:MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
-    
+    this.isLoading = true;
+    this.vehicleService.get_list().then(elements => {
+      this.isLoading = false;
+      if(elements != null && elements.length > 0){
+        this.ELEMENT_DATA = elements;
+        this.dataSource = new MatTableDataSource<IvehicleBasic>(this.ELEMENT_DATA);
+      }
+    })
   }
 
   private editOrCreateModalCaller(element?:IvehicleBasic):Promise<any>{
@@ -76,18 +89,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   create(){
     this.editOrCreateModalCaller().then((result) => {
-      console.log(result);
+      if(result == 'reload'){
+        this.ngOnInit();
+      }
+      
     })
   }
 
   edit(element:IvehicleBasic){
     this.editOrCreateModalCaller(element).then((result) => {
-      console.log(result);
+      if(result == 'reload'){
+        this.ngOnInit();
+      }
     })
   }
 
   remove(element:IvehicleBasic){
-    console.log('removeu', element);
+    const diagRef = this.dialogService.open(RmVehicleComponent, {
+      data: element,
+      disableClose: true,
+    });
+
+    diagRef.afterClosed().subscribe((result) => {
+      if(result == 'reload'){
+        this.ngOnInit();
+      }
+    })
+  }
+
+  about(){
+    this.snackBar.openFromComponent(AboutComponent, {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      duration:5000
+    });
   }
 
 }

@@ -1,1 +1,6 @@
-<p>rm-vehicle works!</p>
+<h1 mat-dialog-title>Remover veículo?</h1>
+<div mat-dialog-content>Tem certeza de que deseja remover o veículo? Essa ação não poderá ser desfeita.</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button color="primary" (click)="remove()">Remover</button>
+</div>

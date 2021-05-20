@@ -64,7 +64,7 @@
 
                 <mat-form-field>
                     <mat-label>Ano</mat-label>
-                    <input type="number" placeholder="1999" matInput formControlName="ano">
+                    <input type="number" min="1500" max="2021" placeholder="1999" matInput formControlName="ano">
                 </mat-form-field>
 
             </div>
@@ -75,8 +75,8 @@
 
     <div class="footer">
         <button mat-flat-button (click)="cancel()">Cancelar</button>
-        <!-- <button mat-flat-button [disabled]="!this.modalForm.valid" color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button> -->
-        <button mat-flat-button color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button>
+        <button mat-flat-button [disabled]="!this.modalForm.valid" color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button>
+        <!-- <button mat-flat-button color="primary" (click)="regOrEdit()">{{isCreating ? 'Registrar' : 'Alterar'}}</button> -->
     </div>
 </div>
 
@@ -106,7 +106,7 @@
         </div>
     </div>
     <div class="footer">
-        <button mat-flat-button (click)="cancel()">Pronto</button>
+        <button mat-flat-button (click)="finish()">Pronto</button>
     </div>
     
     
@@ -120,7 +120,8 @@
                 sentiment_dissatisfied
             </mat-icon>
             <h1>Algo deu errado!</h1>
-            <p>{{isCreating ? 'Houve um erro ao registrar o veículo' : 'Não foi possível editar o veículo'}} com sucesso!</p>
+            <p>{{isCreating ? 'Houve um erro ao registrar o veículo' : 'Não foi possível editar o veículo'}}</p>
+            <p style="font-weight: bold;">{{errorMessage}}</p>
         </div>
     </div>
     
