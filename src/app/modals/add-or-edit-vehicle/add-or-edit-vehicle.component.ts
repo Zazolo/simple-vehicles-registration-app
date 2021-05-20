@@ -5,6 +5,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { VehicleService } from 'src/app/services/vehicle.service';
+import  modelos  from './suggestions/modelos';
+import marcas from './suggestions/marcas';
 @Component({
   selector: 'app-add-or-edit-vehicle',
   templateUrl: './add-or-edit-vehicle.component.html',
@@ -21,8 +23,9 @@ export class AddOrEditVehicleComponent implements OnInit {
     chassi: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(17)]),
     ano: new FormControl('', [Validators.required, Validators.min(1500), Validators.max(2021)]),
   });
-  optionMarca: string[] = ['One', 'Two', 'Three'];
-  optionModelo: string[] = ['Fusca', 'Gol', 'Tinder'];
+  optionMarca: string[] = marcas;
+
+  optionModelo: string[] = modelos;
   filteredOptionsMarca!: Observable<string[]>;
   filteredOptionsModelo!: Observable<string[]>;
   errorMessage = '';
@@ -37,19 +40,25 @@ export class AddOrEditVehicleComponent implements OnInit {
       this.modalForm.get('ano')?.setValue(this.data?.ano);
     }
 
-    this.filteredOptionsMarca = this.modalForm.valueChanges
+    
+    if(this.modalForm.get('marca') != null){
+      this.filteredOptionsMarca = this.modalForm.get('marca')!.valueChanges
       .pipe(
         startWith(''),
         
-        map(value => this._filter('marca', value))
+        map(value => this._filter('marca', value).slice(0, 30))
       );
+    }
+    
 
-    this.filteredOptionsModelo = this.modalForm.valueChanges
-      .pipe(
-        startWith(''),
-        
-        map(value => this._filter('modelo', value))
-      );
+    if(this.modalForm.get('modelo') != null){
+      this.filteredOptionsModelo = this.modalForm.get('modelo')!.valueChanges
+        .pipe(
+          startWith(''),
+          
+          map(value => this._filter('modelo', value).slice(0, 30))
+        );
+    }
   }
 
   private _filter(modo:string, value: string|number): string[] {

@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   expandedElement!: IvehicleBasic | null;
   isLoading = false;
   ELEMENT_DATA: IvehicleBasic[] = [
-    { ano: 1999, chassi:'BD456867', id:'1234567ujndf-dfwqfqnmfio-14561', marca:'Volkswagen', modelo: 'FOX', placa: 'KYW5466', renavam: '12365487923'}
   ];
 
   displayedColumns: string[] = ['id', 'placa', 'chassi', 'renavam', 'modelo', 'marca', 'ano', 'option'];
@@ -65,10 +64,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.vehicleService.get_list().then(elements => {
       this.isLoading = false;
-      if(elements != null && elements.length > 0){
-        this.ELEMENT_DATA = elements;
-        this.dataSource = new MatTableDataSource<IvehicleBasic>(this.ELEMENT_DATA);
-      }
+      if(elements == null){
+        elements = [];
+      }      
+      this.ELEMENT_DATA = elements;
+      this.dataSource = new MatTableDataSource<IvehicleBasic>(this.ELEMENT_DATA);
+    }).catch((err)=>{
+      console.log("Ocorreu um erro!", err);
     })
   }
 

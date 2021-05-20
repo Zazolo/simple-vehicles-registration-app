@@ -13,10 +13,12 @@ import { MaterialModule } from './material.module';
     AppComponent
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     PagesModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
